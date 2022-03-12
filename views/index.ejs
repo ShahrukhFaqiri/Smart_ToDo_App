@@ -1,55 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Home Page</title>
 
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+<head>
+  <title>Home Page</title>
 
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
 
 </head>
-  <body>
-    <nav class="navigation">
-      <span class="logo">ToDo App</span>
-      <div class="user-info">
-        <button>login</button>
-        <button>register</button>
-      </div>
-    </nav>
 
-    <div>
+<body>
+  <nav class="navigation">
+    <span class="logo">ToDo App</span>
+    <div class="user-info">
+
       <form method="POST" action="/users/login">
-        <input type="name" name="submit" placeholder="type here"/>
+        <input type="text" name="submit" placeholder="username">
         <button type="submit">login</button>
       </form>
+
+
+
+      <button>register</button>
+    </div>
+  </nav>
+
+  <div>
+    <form method="POST" action="/todos">
+      <input type="text" name="submit" placeholder="what do you have to do today" />
+      <button type="submit">Submit Todo</button>
+    </form>
+  </div>
+
+  <div>
+    <form method="POST" action="/users/logout">
+      <button type="submit">logout</button>
+    </form>
+  </div>
+
+  <main class="container">
+
+    <div id="movies">
+      <h2>movies</h2>
+    </div>
+    <div id="restaurants">
+      <h2>restaurants</h2>
+    </div>
+    <div id="books">
+      <h2>books</h2>
+    </div>
+    <div id="products">
+      <h2>products</h2>
     </div>
 
-    <div>
-      <form method="POST" action="/users/logout">
-        <button type="submit">logout</button>
-      </form>
-    </div>
+  </main>
 
-    <main class="container">
+</body>
 
-      <div id="movies">
-        <h2>movies</h2>
-      </div>
-      <div id="restaurants">
-        <h2>restaurants</h2>
-      </div>
-      <div id="books">
-        <h2>books</h2>
-      </div>
-      <div id="products">
-        <h2>products</h2>
-      </div>
-
-    </main>
-
-  </body>
 </html>
