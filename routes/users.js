@@ -21,5 +21,23 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
+  router.post("/login", (req, res) => {
+    // console.log(`WE ARE HEREL`,req);
+    const body = req.body;
+    console.log(body)
+    // db.query(`SELECT * FROM users;`)
+    //   .then(data => {
+    //     const users = data.rows;
+    //     res.json({ users });
+    //   })
+    //   .catch(err => {
+    //     res
+    //       .status(500)
+    //       .json({ error: err.message });
+    //   });
+  });
+
+
   return router;
 };
