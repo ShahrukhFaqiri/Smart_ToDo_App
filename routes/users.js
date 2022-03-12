@@ -9,6 +9,7 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
+  //Get All Users;
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM users;`)
       .then((data) => {
@@ -19,6 +20,19 @@ module.exports = (db) => {
         res.status(500).json({ error: err.message });
       });
   });
+
+  //GET Register User.
+  router.post("/register", (req, res) => {
+    const username = req.body.submit;
+    db.query(`INSERT INTO users (name) VALUES ($1) RETURNING *;`, [username])
+      .then((res) => {
+        console.log(res.rows)
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+
   //POST: Login Route.
   router.post("/login", (req, res) => {
     const body = req.body.submit;
@@ -34,7 +48,7 @@ module.exports = (db) => {
         res.status(500).json({ error: err.stack });
       });
   });
-
+  //POST: Logout User.
   router.post("/logout", (req, res) => {
     if (req.session.user) {
       req.session = null;
