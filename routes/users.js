@@ -5,38 +5,39 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
-const express = require('express');
+const cookieSession = require("cookie-session");
+const express = require("express");
 const router = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM users;`)
-      .then(data => {
+      .then((data) => {
         const users = data.rows;
         res.json({ users });
       })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
       });
   });
 
   router.post("/login", (req, res) => {
     // console.log(`WE ARE HEREL`,req);
-    const body = req.body;
-    console.log(body);
-    res.send(req.body);
-    // db.query(`SELECT * FROM users;`)
-    //   .then(data => {
-    //     const users = data.rows;
-    //     res.json({ users });
-    //   })
-    //   .catch(err => {
-    //     res
-    //       .status(500)
-    //       .json({ error: err.message });
-    //   });
+    const body = req.body.submit;
+
+    db.query(`SELECT * FROM users WHERE name =$1`, [body])
+      .then(data => {
+        const users = data.rows[0].name;
+        if(users) {
+          req.session.user = users;
+          res.redirect("/");
+        }
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.stack });
+      });
   });
 
 
