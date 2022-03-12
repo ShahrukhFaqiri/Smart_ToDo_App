@@ -5,6 +5,7 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
+const cookieSession = require("cookie-session");
 const express = require("express");
 const router = express.Router();
 
@@ -21,7 +22,24 @@ module.exports = (db) => {
   });
 
   router.post("/login", (req, res) => {
-    console.log(req.body);
+    // console.log(`WE ARE HEREL`,req);
+    const body = req.body.submit;
+
+    db.query(`SELECT * FROM users WHERE name =$1`, [body])
+      .then(data => {
+        const users = data.rows[0].name;
+        if(users) {
+          req.session.user = users;
+          res.redirect("/");
+        }
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.stack });
+      });
   });
+
+
   return router;
 };
