@@ -74,13 +74,17 @@ module.exports = (db) => {
     const body = req.body.submit;
     db.query(`SELECT * FROM users WHERE name =$1`, [body])
       .then((data) => {
-        const usersId = data.rows[0].id;
-        const username = data.rows[0].name;
-        if (usersId, username) {
-          req.session.userId = usersId;
-          req.session.username = username;
-          res.redirect('/');
-        }
+        if (data.rows.length !== 0) {
+          const usersId = data.rows[0].id;
+          const username = data.rows[0].name;
+          if (usersId, username) {
+            req.session.userId = usersId;
+            req.session.username = username;
+            res.redirect('/');
+          };
+        } else {
+          res.status(403).send(`Invalid user information, register here: <a href="/users/register">Register!</a>`);
+        };
       })
       .catch((err) => {
         res.status(500).json({ error: err.stack });
@@ -91,8 +95,9 @@ module.exports = (db) => {
     if (req.session.userId) {
       req.session = null;
       res.redirect('/');
-    }
-    res.status(403).send(`Hey bud, please login before trying to logout!`);
+    } else {
+      res.status(403).send(`Hey bud, please login before trying to logout!`);
+    };
   });
 
   return router;
