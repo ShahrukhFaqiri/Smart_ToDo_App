@@ -6,7 +6,7 @@
  */
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -25,7 +25,8 @@ module.exports = (db) => {
   router.post("/login", (req, res) => {
     // console.log(`WE ARE HEREL`,req);
     const body = req.body;
-    console.log(body)
+    console.log(body);
+    res.send(req.body);
     // db.query(`SELECT * FROM users;`)
     //   .then(data => {
     //     const users = data.rows;
