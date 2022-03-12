@@ -30,43 +30,42 @@ module.exports = (db) => {
   router.get('/edit', (req, res) => {
     const templateVars = {
       username: req.session.username
-    }
-    res.render('edit', templateVars)
-  })
+    };
+    res.render('edit', templateVars);
+  });
 
   //POST: Change Username.
   router.post('/edit', (req, res) => {
-    const templateVars = {
-      username: req.session.username
-    }
-    // console.log(`User Submitted:`,req.body.submit);
-    // console.log(`I have stored the ID,`, req.session)
     db.query(`UPDATE users SET name = $1 WHERE id = $2 RETURNING *;`, [req.body.submit, req.session.userId])
-    .then((data)=>{
-      console.log(`We are in here`, data)
-      res.render('edit', templateVars);
-    })
-
+      .then((data) => {
+        req.session.username = data.rows[0].name;
+        res.redirect('edit');
+      });
   });
 
   //GET Register User.
   router.post('/register', (req, res) => {
     const username = req.body.submit;
-    // db.query(`SELECT name FROM users WHERE name = $1`, [username])
-    // .then((data)=>{
-    //   if(username === data.rows[0].name){
-    //     return res.status(401).send(`Username is taken boss!`);
-    //   }
-    // })
-  //
-    db.query(`INSERT INTO users (name) VALUES ($1) RETURNING *;`, [username])
+    db.query(`SELECT * FROM users WHERE name = $1`, [username])
       .then((data) => {
-        req.session.userId = data.rows[0].id;
-        req.session.username = data.rows[0].name;
-        res.redirect('/');
+        if (data.rows.length !== 0) {
+          res.status(401).send(`Username is taken boss!`);
+          return false;
+        }
+        return true;
       })
-      .catch((err) => {
-        res.status(500).json({ error: err.stack });
+      .then(ifNewUser => {
+        if (ifNewUser) {
+          db.query(`INSERT INTO users (name) VALUES ($1) RETURNING *;`, [username])
+            .then((data) => {
+              req.session.userId = data.rows[0].id;
+              req.session.username = data.rows[0].name;
+              res.redirect('/');
+            })
+            .catch((err) => {
+              res.status(500).json({ error: err.stack });
+            });
+        }
       });
   });
 
