@@ -13,7 +13,7 @@ module.exports = (db) => {
 
   router.post('/', (req, res) => {
 
-    if(req.session.userId){
+    if (req.session.userId) {
       const values = [req.session.userId, req.body.submit, 'MOVIES'];
       db.query(`
         INSERT INTO todos (user_id, description, category)
@@ -49,6 +49,16 @@ module.exports = (db) => {
 
   // });
 
+  router.get("/display", (req, res) => {
+    db.query(`SELECT * FROM todos;`).then((data) => {
+      data.rows.forEach(row => {
+        console.log(data.rows);
+      })
+      res.send(data.rows);
+
+    })
+
+  })
   return router;
 
 };
