@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/todos.css" type="text/css" />
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
@@ -17,44 +18,45 @@
 <body>
   <nav class="navigation">
     <span class="logo">ToDo App</span>
-    <div class="user-info">
 
+    <div>
       <form method="POST" action="/users/login">
         <input type="text" name="submit" placeholder="username">
         <button type="submit">login</button>
       </form>
-
-
-
-      <button>register</button>
+      <form method="POST" action="/users/logout">
+        <button type="submit">logout</button>
+      </form>
     </div>
+
   </nav>
 
   <div>
-    <form  id="todo-form">
+    <form id="todo-form">
       <input type="text" name="submit" placeholder="what do you have to do today" />
       <button id="todo-add-button" type="submit">Submit Todo</button>
     </form>
   </div>
 
-  <div>
-    <form method="POST" action="/users/logout">
-      <button type="submit">logout</button>
-    </form>
-  </div>
-
   <main class="container">
 
-    <div id="movies">
+    <div class="todo-container" id="movies">
       <h2>movies</h2>
+
+      <article class="todo">
+        <p>text</p>
+      </article>
+
     </div>
-    <div id="restaurants">
+
+    </div>
+    <div class="todo-container" id="restaurants">
       <h2>restaurants</h2>
     </div>
-    <div id="books">
+    <div class="todo-container" id="books">
       <h2>books</h2>
     </div>
-    <div id="products">
+    <div class="todo-container" id="products">
       <h2>products</h2>
     </div>
 
