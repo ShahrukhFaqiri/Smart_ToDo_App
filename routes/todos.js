@@ -13,17 +13,25 @@ module.exports = (db) => {
 
   router.post('/', (req, res) => {
 
-    const values = [req.session.userId, req.body.submit, 'MOVIES'];
+    if(req.session.userId){
+      const values = [req.session.userId, req.body.submit, 'MOVIES'];
+      db.query(`
+        INSERT INTO todos (user_id, description, category)
+        VALUES ($1, $2, $3)
+        RETURNING *;
+        `, values)
+        .then(data => {
+          console.log(`ADDED ${JSON.stringify(data.rows)} TO TABLE TODOS}`);
+        });
+    } else {
+      res.status(403).send(`Please login to make a task!`)
+    }
+    // res.send('hello');
 
-    db.query(`
-      INSERT INTO todos (user_id, description, category)
-      VALUES ($1, $2, $3)
-      RETURNING *;
-      `, values)
-      .then(data => {
-        console.log(`ADDED ${JSON.stringify(data.rows)} TO TABLE TODOS}`);
-      });
+
   });
+
+
 
   // Get back to this after frontend functional
   // router.post('/:id/delete', (req, res) => {
