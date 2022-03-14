@@ -3,10 +3,19 @@ const request = require("request-promise-native");
 const router = express.Router();
 
 module.exports = (db) => {
+
+  /*
+   * Logic for post request from todo-form on index page to add new todos
+   * Make query requests to external apis for search input
+   * Call function to compile needed data from api request results
+   * Call function to insert new todo to DB
+   * Call function to add new element to view
+   */
   router.post("/", (req, res) => {
-    let description = req.body.submit;
-    let category = null;
+
+    const description = req.body.submit;
     const queries = initializeQueries(description);
+    let category = null;
 
     const movies =
       request(queries.movie)
@@ -32,26 +41,28 @@ module.exports = (db) => {
           return resultLength;
         });
 
+    // Add product api request (Promise)
+
     Promise.all([movies, books, restaurants])
       .then((result) => {
         console.log(result);
-      })
+      });
 
   });
 
   const addIntoDb = (userId, description, category) => {
+
     const values = [userId, description, category];
 
-    db.query(
-      `
+    db.query(`
           INSERT INTO todos (user_id, description, category)
           VALUES ($1, $2, $3)
           RETURNING *;
-          `,
-      values
-    ).then((data) => {
-      console.log(`ADDED ${JSON.stringify(data.rows)} TO TABLE TODOS}`);
-    });
+          `, values)
+      .then((data) => {
+        console.log(`ADDED ${JSON.stringify(data.rows)} TO TABLE TODOS}`);
+      });
+
   };
 
   return router;
@@ -59,31 +70,19 @@ module.exports = (db) => {
 };
 
 const initializeQueries = (input) => {
-  let encodedInput = encodeURIComponent(input);
-  let movieQuery = process.env.MOVIE_API + `${encodedInput}`;
-  let bookQuery =
-    process.env.BOOK_API + `${encodedInput}%22&langRestrict=en&maxResults=1`;
-  let restaurantQuery =
-    `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=49.28,-123.12&radius=500&type=restaurant&keyword=${input}` +
-    process.env.RESTAURANT_API;
+
+  const encodedInput = encodeURIComponent(input);
+  const movieQuery = process.env.MOVIE_API + `${encodedInput}`;
+  const bookQuery = process.env.BOOK_API + `${encodedInput}%22&langRestrict=en&maxResults=1`;
+  const restaurantQuery =
+    `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=49.3,-123.1&radius=500&type=restaurant&keyword=${input}${process.env.RESTAURANT_API}`;
+  // Add product query
+
   return {
     movie: movieQuery,
     book: bookQuery,
     restaurant: restaurantQuery,
+    // Add product query
   };
+
 };
-
-//Fetch External Apis based on User's input!
-
-// fetchQuery(queries)
-// .then((result) => {
-//     console.log(`Query`, result);
-//     // let resultLength = JSON.parse(result).results.length;
-//     // if (resultLength > 0) {
-//     //   category = "Movies";
-//     // }
-//     // let finalResult = { description, category };
-//   })
-//   // .then((data) => {
-//   //   addIntoDb(req.session.userId, data.description, data.category);
-//   // });
