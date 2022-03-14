@@ -7,35 +7,37 @@ module.exports = (db) => {
     let description = req.body.submit;
     let category = null;
     const queries = initializeQueries(description);
-    console.log(`We are definitely here!`);
 
-    request(queries.movie)
+    const movies =
+      request(queries.movie)
+        .then((result) => {
+          let resultLength = JSON.parse(result).results.length;
+          if (resultLength > 0) {
+            category = "Movies";
+          }
+          return resultLength;
+        });
+
+    const books =
+      request(queries.book)
+        .then((result) => {
+          let resultLength = JSON.parse(result).items.length;
+          return resultLength;
+        });
+
+    const restaurants =
+      request(queries.restaurant)
+        .then((result) => {
+          let resultLength = JSON.parse(result).results.length;
+          return resultLength;
+        });
+
+    Promise.all([movies, books, restaurants])
       .then((result) => {
-        let resultLength = JSON.parse(result).results.length;
-        if (resultLength > 0) {
-          category = "Movies";
-        }
+        console.log(result);
       })
-      .then(() => {
-        request(queries.book)
-          .then((result) => {
-            let resultLength = JSON.parse(result).items.length;
-            console.log(`This is for boks`,resultLength);
-          })
-          .then(() => {
-            request(queries.restaurant)
-            .then((result) => {
-              let resultLength = JSON.parse(result).results.length;
-              console.log(`this is for restraunt`, resultLength)
-            });
-          });
-      });
-  });
 
-  // if (req.session.userId) {
-  //   const values = [req.session.userId, description, category];
-  //   // res.send('hello');
-  // })
+  });
 
   const addIntoDb = (userId, description, category) => {
     const values = [userId, description, category];
@@ -51,7 +53,9 @@ module.exports = (db) => {
       console.log(`ADDED ${JSON.stringify(data.rows)} TO TABLE TODOS}`);
     });
   };
+
   return router;
+
 };
 
 const initializeQueries = (input) => {
