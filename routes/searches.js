@@ -1,7 +1,7 @@
 const express = require("express");
 const request = require("request-promise-native");
+const domainDb = require("../db/domainDb");
 const router = express.Router();
-const fetch = require('cross-fetch');
 
 module.exports = (db) => {
 
@@ -14,53 +14,87 @@ module.exports = (db) => {
    */
   router.post("/", (req, res) => {
 
-    const description = req.body.submit;
-    const queries = initializeQueries(description);
-    let category = null;
+    const input = req.body.submit;
+    const queries = initializeQueries(input);
 
     const movies =
       request(queries.movie)
         .then((result) => {
-          let resultLength = JSON.parse(result).results.length;
-          if (resultLength > 0) {
-            category = "Movies";
-          }
-          return resultLength;
+          const parsedResult = JSON.parse(result).results;
+          let weight = 0;
+
+          if (parsedResult.length !== 0) {
+            for (let i = 0; i < parsedResult.length; i++) {
+              if (input === parsedResult[i].title) {
+                weight++;
+                break;
+              };
+            };
+          };
+          return weight;
         });
 
     const books =
       request(queries.book)
         .then((result) => {
-          let resultLength = JSON.parse(result).items.length;
-          return resultLength;
+          const parsedResult = JSON.parse(result).items;
+          const totalItems = JSON.parse(result).totalItems;
+          let weight = 0;
+
+          if (totalItems !== 0) {
+            for (let i = 0; i < parsedResult.length; i++) {
+              if (input === parsedResult[i].volumeInfo.title) {
+                weight++;
+                break;
+              };
+            };
+          };
+          return weight;
         });
 
     const restaurants =
       request(queries.restaurant)
         .then((result) => {
-          let resultLength = JSON.parse(result).results.length;
-          return resultLength;
+          const parsedResult = JSON.parse(result).results;
+          let weight = 0;
+
+          if (parsedResult.length !== 0) {
+            for (let i = 0; i < 3; i++) {
+              if (input === parsedResult[i].name) {
+                weight++;
+              };
+            };
+          };
+          return weight;
         });
 
     const googleSearch =
       request(queries.product)
         .then((result) => {
-          let resultLength = JSON.parse(result).organic_results.length;
-          return resultLength;
-        })
+          const parsedResult = JSON.parse(result).organic_results;
+          const searchDomains = [];
 
-    // Add product api request (Promise)
+          for (let i = 0; i < parsedResult.length; i++) {
+            const domain = (parsedResult[i].link).replace(/.+\/\/|www.|\..+/g, '');
+            searchDomains.push(domain);
+          };
+
+          return searchDomains;
+        })
 
     Promise.all([movies, books, restaurants, googleSearch])
       .then((result) => {
+
         console.log(result);
+        catagorizeSearchResults();
+
       });
 
   });
 
-  const addIntoDb = (userId, description, category) => {
+  const addIntoDb = (userId, input, category) => {
 
-    const values = [userId, description, category];
+    const values = [userId, input, category];
 
     db.query(`
           INSERT INTO todos (user_id, description, category)
@@ -73,6 +107,20 @@ module.exports = (db) => {
 
   };
 
+  const catagorizeSearchResults = (searchDomains) => {
+
+    const keys = Object.keys(domainDb);
+    for (const key of keys) {
+
+      console.log('KEY: ', key);
+
+      for (const item of domainDb[key]) {
+        console.log(item);
+      };
+    };
+
+  };
+
   return router;
 
 };
@@ -81,9 +129,9 @@ const initializeQueries = (input) => {
 
   const encodedInput = encodeURIComponent(input);
   const movieQuery = process.env.MOVIE_API + `${encodedInput}`;
-  const bookQuery = process.env.BOOK_API + `${encodedInput}%22&langRestrict=en&maxResults=1`;
+  const bookQuery = process.env.BOOK_API + `${encodedInput}%22&langRestrict=en`;
   const restaurantQuery =
-    `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=49.3,-123.1&radius=500&type=restaurant&keyword=${input}${process.env.RESTAURANT_API}`;
+    `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=49.205,-122.911&radius=5000&type=restaurant&keyword=${input}${process.env.RESTAURANT_API}`;
   const productQuery = `https://serpapi.com/search.json?engine=google&q=${encodedInput}&api_key=${process.env.PRODUCT_API}`
 
 
