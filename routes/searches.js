@@ -1,6 +1,7 @@
 const express = require("express");
 const request = require("request-promise-native");
 const router = express.Router();
+const fetch = require('cross-fetch');
 
 module.exports = (db) => {
 
@@ -41,9 +42,16 @@ module.exports = (db) => {
           return resultLength;
         });
 
+    const googleSearch =
+      request(queries.product)
+        .then((result) => {
+          let resultLength = JSON.parse(result).organic_results.length;
+          return resultLength;
+        })
+
     // Add product api request (Promise)
 
-    Promise.all([movies, books, restaurants])
+    Promise.all([movies, books, restaurants, googleSearch])
       .then((result) => {
         console.log(result);
       });
@@ -76,13 +84,14 @@ const initializeQueries = (input) => {
   const bookQuery = process.env.BOOK_API + `${encodedInput}%22&langRestrict=en&maxResults=1`;
   const restaurantQuery =
     `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=49.3,-123.1&radius=500&type=restaurant&keyword=${input}${process.env.RESTAURANT_API}`;
-  // Add product query
+  const productQuery = `https://serpapi.com/search.json?engine=google&q=${encodedInput}&api_key=${process.env.PRODUCT_API}`
+
 
   return {
     movie: movieQuery,
     book: bookQuery,
     restaurant: restaurantQuery,
-    // Add product query
+    product: productQuery
   };
 
 };
