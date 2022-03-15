@@ -1,4 +1,4 @@
-const domainDb = {
+module.exports ={
   movies: [
     'imdb',
     'rottentomatoes',
