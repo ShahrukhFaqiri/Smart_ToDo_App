@@ -27,8 +27,20 @@ const createTodoElement = (data, id) => {
  ${info}
 <footer>
   <button id="${id}">Delete</button>
-  <i>Edit</i>
-</footer>
+
+  <form action="/">
+  <label for="categories">Choose a category:</label>
+  <select name="category" id="category">
+    <option value="Movies">Movies</option>
+    <option value="Restaurants">Restaurants</option>
+    <option value="Books">Books</option>
+    <option value="Products">Products</option>
+  </select>
+  <br><br>
+  <input id="edit-${id}type="submit" value="Submit">
+</form>
+
+  </footer>
 </article>
 `;
 
