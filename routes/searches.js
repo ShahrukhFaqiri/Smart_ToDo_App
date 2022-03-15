@@ -51,7 +51,7 @@ module.exports = (db) => {
       let weight = 0;
 
       if (parsedResult.length !== 0) {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < parsedResult.length; i++) {
           if (input === parsedResult[i].name) {
             weight++;
           }
@@ -73,9 +73,41 @@ module.exports = (db) => {
     });
 
     Promise.all([movies, books, restaurants, googleSearch]).then((result) => {
-      console.log(result);
-      catagorizeSearchResults();
-      console.log(`hello`);
+      const searchResults = result[3];
+      const searchHits = catagorizeSearchResults(searchResults);
+      console.log(searchHits);
+
+      const movieScore = result[0] + searchHits.movies;
+      const bookScore = result[1] + searchHits.books;
+      const restaurantScore = result[2] + searchHits.restaurants;
+      const productScore = searchHits.products;
+      let category = '';
+
+      const scores = [movieScore, bookScore, restaurantScore, productScore];
+      console.log('scores', scores);
+
+      for (let i = 0; i < scores.length; i++) {
+        let biggestScore = 0;
+
+        if (scores[i] > biggestScore) {
+          biggestScore = scores[i];
+
+          switch (i) {
+            case 0: category = 'Movies';
+              break;
+            case 1: category = 'Books';
+              break;
+            case 2: category = 'Restaurants';
+              break;
+            case 3: category = 'Products';
+              break;
+            default: null;
+          };
+        };
+      };
+
+      addIntoDb(req.session.userId, input, category);
+
     });
   });
 
@@ -94,10 +126,25 @@ module.exports = (db) => {
     });
   };
 
-  const catagorizeSearchResults = () => {
+  const catagorizeSearchResults = (searchResults) => {
+
+    const weight = {
+      movies: 0,
+      books: 0,
+      products: 0,
+      restaurants: 0
+    };
+
     for (let [key, value] of Object.entries(domainDb)) {
-      console.log(key, value);
-    }
+      for (const result of searchResults) {
+        if (value.includes(result)) {
+          weight[key]++;
+        };
+      };
+    };
+
+    return weight;
+
   };
 
   return router;
