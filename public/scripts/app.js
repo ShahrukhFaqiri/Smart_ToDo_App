@@ -66,15 +66,13 @@ const addTodos = (todos) => {
 
 const addEventDelete = (id) => {
   $('#' + id).click(function () {
-    if (Number(this.id) === Number(id)) {
-      $.ajax({
-        url: "/todos/delete",
-        method: "POST",
-        data: { 'id': id },
-        success: function () {
-          $('#' + id).parents('.todo-card').empty();
-        }
-      });
-    };
+    $.ajax({
+      url: "/todos/delete",
+      method: "POST",
+      data: { 'id': id },
+      success: function () {
+        $('#' + id).parents('.todo-card').empty();
+      }
+    });
   });
 };
