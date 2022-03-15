@@ -12,9 +12,6 @@ $(() => {
       data: serializedData,
     });
   });
-
-
-
 });
 
 const createTodoElement = (data, id) => {
@@ -26,7 +23,7 @@ const createTodoElement = (data, id) => {
 </div>
  ${info}
 <footer>
-  <button class="delete" id="${id}">Delete</button>
+  <button id="${id}">Delete</button>
   <i>Edit</i>
 </footer>
 </article>
@@ -62,13 +59,22 @@ const addTodos = (todos) => {
         break;
     };
 
-    $('.delete').click(function () {
-
-      if (Number(this.id) == Number(todo.id)) {
-        alert('clicked delete button: ' + todo.id);
-      };
-
-    });
+    addEventDelete(todo.id);
 
   };
+};
+
+const addEventDelete = (id) => {
+  $('#' + id).click(function () {
+    if (Number(this.id) === Number(id)) {
+      $.ajax({
+        url: "/todos/delete",
+        method: "POST",
+        data: { 'id': id },
+        success: function () {
+          $('#' + id).parents('.todo-card').empty();
+        }
+      });
+    };
+  });
 };
