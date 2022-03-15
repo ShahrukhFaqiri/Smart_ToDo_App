@@ -24,9 +24,9 @@ module.exports = (db) => {
           if (input === parsedResult[i].title) {
             weight++;
             break;
-          }
-        }
-      }
+          };
+        };
+      };
       return weight;
     });
 
@@ -40,9 +40,9 @@ module.exports = (db) => {
           if (input === parsedResult[i].volumeInfo.title) {
             weight++;
             break;
-          }
-        }
-      }
+          };
+        };
+      };
       return weight;
     });
 
@@ -54,9 +54,9 @@ module.exports = (db) => {
         for (let i = 0; i < parsedResult.length; i++) {
           if (input === parsedResult[i].name) {
             weight++;
-          }
-        }
-      }
+          };
+        };
+      };
       return weight;
     });
 
@@ -67,7 +67,7 @@ module.exports = (db) => {
       for (let i = 0; i < parsedResult.length; i++) {
         const domain = parsedResult[i].link.replace(/.+\/\/|www.|\..+/g, "");
         searchDomains.push(domain);
-      }
+      };
 
       return searchDomains;
     });

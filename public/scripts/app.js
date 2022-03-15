@@ -12,9 +12,12 @@ $(() => {
       data: serializedData,
     });
   });
+
+
+
 });
 
-const createTodoElement = (data) => {
+const createTodoElement = (data, id) => {
   let info = data;
   let $taskCard = `
 <article class="todo-card">
@@ -23,11 +26,12 @@ const createTodoElement = (data) => {
 </div>
  ${info}
 <footer>
-  <i>Delete</i>
+  <button class="delete" id="${id}">Delete</button>
   <i>Edit</i>
 </footer>
 </article>
 `;
+
   return $taskCard;
 };
 
@@ -45,17 +49,26 @@ const addTodos = (todos) => {
   for (let todo of todos) {
     switch (todo.category) {
       case 'Movies':
-        $('#movies').append(createTodoElement(todo.description));
+        $('#movies').append(createTodoElement(todo.description, todo.id));
         break;
       case 'Books':
-        $('#books').append(createTodoElement(todo.description));
+        $('#books').append(createTodoElement(todo.description, todo.id));
         break;
       case 'Products':
-        $('#products').append(createTodoElement(todo.description));
+        $('#products').append(createTodoElement(todo.description, todo.id));
         break;
       case 'Restaurants':
-        $('#restaurants').append(createTodoElement(todo.description));
+        $('#restaurants').append(createTodoElement(todo.description, todo.id));
         break;
     };
+
+    $('.delete').click(function () {
+
+      if (Number(this.id) == Number(todo.id)) {
+        alert('clicked delete button: ' + todo.id);
+      };
+
+    });
+
   };
 };
