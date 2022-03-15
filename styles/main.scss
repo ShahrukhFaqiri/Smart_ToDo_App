@@ -21,10 +21,10 @@ body {
 }
 
 .navigation {
-  background-color: aqua;
+  background-color: #009de6;
+background-image: url("https://www.transparenttextures.com/patterns/arches.png");
   display: flex;
   justify-content: space-between;
-  display: flex;
   padding: 1% 2%;
   align-items: center;
 
@@ -37,6 +37,15 @@ body {
     display: flex;
   }
 
+  .nav-corner {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #login-logout {
+    display: inline-flex;
+  }
+
 }
 
 .container {
@@ -45,3 +54,6 @@ body {
   height: 100%;
 }
 
+#logout {
+  margin-left:10px;
+}
