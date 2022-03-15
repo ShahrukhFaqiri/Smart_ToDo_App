@@ -26,7 +26,7 @@ const createTodoElement = (data, id) => {
 </div>
  ${info}
 <footer>
-  <button class="delete" id="${id}">Delete</button>
+  <button id="${id}">Delete</button>
   <i>Edit</i>
 </footer>
 </article>
@@ -62,21 +62,18 @@ const addTodos = (todos) => {
         break;
     };
 
-    $('.delete').click(function () {
-
+    // May want to add user verification later
+    $('#' + todo.id).click(function () {
       if (Number(this.id) === Number(todo.id)) {
-
         $.ajax({
           url: "/todos/delete",
           method: "POST",
           data: { 'id': todo.id },
           success: function () {
-            console.log($('#' + todo.id).parents('.todo-card').empty());
+            $('#' + todo.id).parents('.todo-card').empty();
           }
         });
-
       };
-
     });
 
   };

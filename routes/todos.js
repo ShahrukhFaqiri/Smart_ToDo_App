@@ -21,7 +21,7 @@ module.exports = (db) => {
   router.post('/delete', (req, res) => {
     db.query(`DELETE FROM todos WHERE id = $1`, [req.body.id])
       .then(() => {
-        res.send('DELETED');
+        res.send('ITEM DELETED');
       });
   });
 
