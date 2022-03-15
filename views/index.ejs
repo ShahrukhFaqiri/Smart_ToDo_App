@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/todos.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/nav.scss" type="text/css" />
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
@@ -19,14 +20,16 @@
   <nav class="navigation">
     <span class="logo">ToDo App</span>
 
-    <div>
+    <div class="nav-corner">
       <form method="POST" action="/users/login">
         <input type="text" name="submit" placeholder="username">
-        <button type="submit">login</button>
+        <div id="login-logout">
+          <button id="login" type="submit">login</button>
       </form>
       <form method="POST" action="/users/logout">
-        <button type="submit">logout</button>
+        <button id="logout" type="submit">logout</button>
       </form>
+    </div>
     </div>
 
   </nav>
