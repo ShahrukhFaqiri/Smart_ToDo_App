@@ -64,8 +64,17 @@ const addTodos = (todos) => {
 
     $('.delete').click(function () {
 
-      if (Number(this.id) == Number(todo.id)) {
-        alert('clicked delete button: ' + todo.id);
+      if (Number(this.id) === Number(todo.id)) {
+
+        $.ajax({
+          url: "/todos/delete",
+          method: "POST",
+          data: { 'id': todo.id },
+          success: function () {
+            console.log($('#' + todo.id).parents('.todo-card').empty());
+          }
+        });
+
       };
 
     });

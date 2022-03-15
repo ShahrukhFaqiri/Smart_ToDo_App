@@ -17,6 +17,14 @@ module.exports = (db) => {
       res.send(data.rows);
     });
   });
+
+  router.post('/delete', (req, res) => {
+    db.query(`DELETE FROM todos WHERE id = $1`, [req.body.id])
+      .then(() => {
+        res.send('DELETED');
+      });
+  });
+
   return router;
 
 };
