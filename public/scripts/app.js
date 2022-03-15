@@ -28,7 +28,6 @@ const createTodoElement = (data) => {
 </footer>
 </article>
 `;
-console.log($taskCard);
   return $taskCard;
 };
 
@@ -41,12 +40,22 @@ const loadTodos = function () {
     },
   });
 };
-//
 
 const addTodos = (todos) => {
   for (let todo of todos) {
-    if(todo.category === "Movies"){
-     $('#movies').append(createTodoElement(todo.description));
-    }
-  }
+    switch (todo.category) {
+      case 'Movies':
+        $('#movies').append(createTodoElement(todo.description));
+        break;
+      case 'Books':
+        $('#books').append(createTodoElement(todo.description));
+        break;
+      case 'Products':
+        $('#products').append(createTodoElement(todo.description));
+        break;
+      case 'Restaurants':
+        $('#restaurants').append(createTodoElement(todo.description));
+        break;
+    };
+  };
 };
