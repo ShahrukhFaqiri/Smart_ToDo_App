@@ -24,9 +24,9 @@ module.exports = (db) => {
           if (input === parsedResult[i].title) {
             weight++;
             break;
-          };
-        };
-      };
+          }
+        }
+      }
       return weight;
     });
 
@@ -40,9 +40,9 @@ module.exports = (db) => {
           if (input === parsedResult[i].volumeInfo.title) {
             weight++;
             break;
-          };
-        };
-      };
+          }
+        }
+      }
       return weight;
     });
 
@@ -54,9 +54,9 @@ module.exports = (db) => {
         for (let i = 0; i < parsedResult.length; i++) {
           if (input === parsedResult[i].name) {
             weight++;
-          };
-        };
-      };
+          }
+        }
+      }
       return weight;
     });
 
@@ -67,7 +67,7 @@ module.exports = (db) => {
       for (let i = 0; i < parsedResult.length; i++) {
         const domain = parsedResult[i].link.replace(/.+\/\/|www.|\..+/g, "");
         searchDomains.push(domain);
-      };
+      }
 
       return searchDomains;
     });
@@ -81,10 +81,10 @@ module.exports = (db) => {
       const bookScore = result[1] + searchHits.books;
       const restaurantScore = result[2] + searchHits.restaurants;
       const productScore = searchHits.products;
-      let category = '';
+      let category = "";
 
       const scores = [movieScore, bookScore, restaurantScore, productScore];
-      console.log('scores', scores);
+      console.log("scores", scores);
 
       for (let i = 0; i < scores.length; i++) {
         let biggestScore = 0;
@@ -93,58 +93,60 @@ module.exports = (db) => {
           biggestScore = scores[i];
 
           switch (i) {
-            case 0: category = 'Movies';
+            case 0:
+              category = "Movies";
               break;
-            case 1: category = 'Books';
+            case 1:
+              category = "Books";
               break;
-            case 2: category = 'Restaurants';
+            case 2:
+              category = "Restaurants";
               break;
-            case 3: category = 'Products';
+            case 3:
+              category = "Products";
               break;
-            default: null;
-          };
-        };
-      };
+            default:
+              null;
+          }
+        }
+      }
 
-      addIntoDb(req.session.userId, input, category);
-
+       return addIntoDb(req.session.userId, input, category).then((data) => {
+        console.log(`ADDED ${JSON.stringify(data.rows)} TO TABLE TODOS}`);
+        return res.status(200).json(data.rows[0]);
+      });
     });
   });
 
   const addIntoDb = (userId, input, category) => {
     const values = [userId, input, category];
-
-    db.query(
+    return db.query(
       `
           INSERT INTO todos (user_id, description, category)
           VALUES ($1, $2, $3)
           RETURNING *;
           `,
       values
-    ).then((data) => {
-      console.log(`ADDED ${JSON.stringify(data.rows)} TO TABLE TODOS}`);
-    });
+    )
   };
 
   const catagorizeSearchResults = (searchResults) => {
-
     const weight = {
       movies: 0,
       books: 0,
       products: 0,
-      restaurants: 0
+      restaurants: 0,
     };
 
     for (let [key, value] of Object.entries(domainDb)) {
       for (const result of searchResults) {
         if (value.includes(result)) {
           weight[key]++;
-        };
-      };
-    };
+        }
+      }
+    }
 
     return weight;
-
   };
 
   return router;

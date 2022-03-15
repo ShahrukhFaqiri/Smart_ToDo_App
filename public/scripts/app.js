@@ -10,6 +10,9 @@ $(() => {
       url: "/searches",
       method: "POST",
       data: serializedData,
+      success: function (res){
+        addTodos([res])
+      }
     });
   });
 });
