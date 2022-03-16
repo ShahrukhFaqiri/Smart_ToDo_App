@@ -26,8 +26,33 @@
 }
 
 article {
-  border: 1px solid black;
+  background: pink;
   width: 90%;
   height: 100px;
   display: flex;
+  flex-direction: column;
+
+div{
+
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  width: 100%;
+
+  h4 {
+    padding-left: 10px;
+  }
+
 }
+
+  footer {
+    margin: -15px;
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+}
+
