@@ -2,16 +2,11 @@ body {
   align-items: center;
   min-height: 100vh;
 
-  background: black;
-  background: linear-gradient(
-    to bottom,
-    rgba(163, 208, 219, 1) 0%,
-    rgba(163, 176, 219, 1) 20%,
-    rgba(163, 173, 219, 1) 34%,
-    rgba(163, 219, 208, 1) 59%,
-    rgba(163, 208, 219, 1) 74%,
-    rgba(163, 208, 219, 1) 100%
-  );
+/* Created with https://www.css-gradient.com */
+background: #13D3EE;
+background: -webkit-linear-gradient(top left, #13D3EE, #E2FB1C);
+background: -moz-linear-gradient(top left, #13D3EE, #E2FB1C);
+background: linear-gradient(to bottom right, #13D3EE, #E2FB1C);
 
   div {
     display: flex;
@@ -21,8 +16,6 @@ body {
 }
 
 .navigation {
-  background-color: #009de6;
-background-image: url("https://www.transparenttextures.com/patterns/arches.png");
   display: flex;
   justify-content: space-between;
   padding: 1% 2%;

@@ -26,9 +26,9 @@ const createTodoElement = (data, id) => {
   <h4>${info}</h6>
 </div>
 <footer>
-  <button id="${id}">Delete</button>
+  <button class="btn btn-danger" id="${id}">Delete</button>
   <form>
-  <select name="category" id="edit-${id}">
+  <select class="btn btn-warning dropdown-toggle" data-toggle="dropdown" name="category" id="edit-${id}">
     <option value="Select">Edit -</option>
     <option value="Movies">Movies</option>
     <option value="Restaurants">Restaurants</option>
