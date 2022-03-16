@@ -21,12 +21,12 @@ module.exports = (db) => {
 
       if (parsedResult.length !== 0) {
         for (let i = 0; i < parsedResult.length; i++) {
-          if (input === parsedResult[i].title) {
+          if (cleanString(input) === cleanString(parsedResult[i].title)) {
             weight++;
             break;
-          }
-        }
-      }
+          };
+        };
+      };
       return weight;
     });
 
@@ -37,7 +37,7 @@ module.exports = (db) => {
 
       if (totalItems !== 0) {
         for (let i = 0; i < parsedResult.length; i++) {
-          if (input === parsedResult[i].volumeInfo.title) {
+          if (cleanString(input) === cleanString(parsedResult[i].volumeInfo.title)) {
             weight++;
             break;
           }
@@ -52,20 +52,7 @@ module.exports = (db) => {
 
       if (parsedResult.length !== 0) {
         for (let i = 0; i < parsedResult.length; i++) {
-
-          const cleanResult =
-            parsedResult[i].name
-              .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
-              .replace(/\s+/g, " ")
-              .toLowerCase();
-
-          const cleanInput =
-            input
-              .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
-              .replace(/\s+/g, " ")
-              .toLowerCase();
-
-          if (cleanResult === cleanInput) {
+          if (cleanString(input) === cleanString(parsedResult[i].name)) {
             weight++;
           };
         };
@@ -178,4 +165,11 @@ const initializeQueries = (input) => {
     restaurant: restaurantQuery,
     product: productQuery,
   };
+};
+
+const cleanString = function (string) {
+  return string
+    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+    .replace(/\s+/g, " ")
+    .toLowerCase();
 };
