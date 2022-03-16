@@ -1,13 +1,15 @@
 .todo-container {
+  min-height: 250px;
+  height: fit-content;
   width: 24%;
-  height: 80%;
   border-color: white;
+  background-color: white;
   border-style: solid;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  padding: 0;
+  padding-bottom: 10px;
   border-radius: 15px 50px 30px ;
 }
 
@@ -27,7 +29,9 @@
 }
 
 article {
-  background: pink;
+  margin-top: 15px;
+  background: #f5fff5;
+  border-radius: 15px;
   width: 90%;
   height: 100px;
   display: flex;
@@ -52,18 +56,25 @@ div{
     margin: -15px;
     padding: 0 15px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
 
-    button {
-      height: 50px ;
-      width: 50px
+
+    btn-hover:hover{
+    color: red;
     }
 
     select {
-      height: 50px;
+      height: 20px;
       width: 50px;
+    }
+    form{
+      margin: 12px;
+      height: 20px;
     }
   }
 
 }
 
+article:hover {
+  box-shadow: 5px 10px lightgray;
+}

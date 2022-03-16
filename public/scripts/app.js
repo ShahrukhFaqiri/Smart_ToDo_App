@@ -20,16 +20,16 @@ $(() => {
 const createTodoElement = (data, id) => {
   let info = data;
   let $taskCard = `
-<article class="todo-card">
+<article class="todo-card pulse">
 <div>
   <input type="checkbox">
   <h4>${info}</h6>
 </div>
 <footer>
-  <button class="btn btn-danger" id="${id}">Delete</button>
+<button class="button btn" title="Delete ToDo" id="${id}"><i class="fa fa-trash btn-hover"></i></button>
   <form>
-  <select class="btn btn-warning dropdown-toggle" data-toggle="dropdown" name="category" id="edit-${id}">
-    <option value="Select">Edit -</option>
+  <select title="Edit ToDo" class="btn btn-secondary btn-sm" data-toggle="dropdown" name="category" id="edit-${id}">
+    <option value="Select">-</option>
     <option value="Movies">Movies</option>
     <option value="Restaurants">Restaurants</option>
     <option value="Books">Books</option>
