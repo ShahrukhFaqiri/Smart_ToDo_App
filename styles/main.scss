@@ -13,6 +13,7 @@ body {
     display: flex;
     justify-content: center;
     padding: 10px;
+    margin-bottom: 15px;
   }
 }
 
@@ -51,4 +52,14 @@ body {
 
 #logout {
   margin-left: 10px;
+}
+
+button {
+  background-color: white;
+  border: none;
+}
+
+input {
+  background-color: white;
+  border: none;
 }
