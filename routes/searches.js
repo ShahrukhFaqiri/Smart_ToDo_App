@@ -52,11 +52,24 @@ module.exports = (db) => {
 
       if (parsedResult.length !== 0) {
         for (let i = 0; i < parsedResult.length; i++) {
-          if (input === parsedResult[i].name) {
+
+          const cleanResult =
+            parsedResult[i].name
+              .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+              .replace(/\s+/g, " ")
+              .toLowerCase();
+
+          const cleanInput =
+            input
+              .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+              .replace(/\s+/g, " ")
+              .toLowerCase();
+
+          if (cleanResult === cleanInput) {
             weight++;
-          }
-        }
-      }
+          };
+        };
+      };
       return weight;
     });
 
@@ -75,7 +88,7 @@ module.exports = (db) => {
     Promise.all([movies, books, restaurants, googleSearch]).then((result) => {
       const searchResults = result[3];
       const searchHits = catagorizeSearchResults(searchResults);
-      console.log(searchHits);
+      console.log('Web Search Hits', searchHits);
 
       const movieScore = result[0] + searchHits.movies;
       const bookScore = result[1] + searchHits.books;
@@ -84,7 +97,7 @@ module.exports = (db) => {
       let category = "";
 
       const scores = [movieScore, bookScore, restaurantScore, productScore];
-      console.log("scores", scores);
+      console.log(`Scores, Movies ${scores[0]}, Books ${scores[1]}, Restaurants ${scores[2]}, Products ${scores[3]}`);
 
       for (let i = 0; i < scores.length; i++) {
         let biggestScore = 0;
@@ -111,7 +124,7 @@ module.exports = (db) => {
         }
       }
 
-       return addIntoDb(req.session.userId, input, category).then((data) => {
+      return addIntoDb(req.session.userId, input, category).then((data) => {
         console.log(`ADDED ${JSON.stringify(data.rows)} TO TABLE TODOS}`);
         return res.status(200).json(data.rows[0]);
       });
@@ -156,7 +169,7 @@ const initializeQueries = (input) => {
   const encodedInput = encodeURIComponent(input);
   const movieQuery = process.env.MOVIE_API + `${encodedInput}`;
   const bookQuery = process.env.BOOK_API + `${encodedInput}%22&langRestrict=en`;
-  const restaurantQuery = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=49.205,-122.911&radius=5000&type=restaurant&keyword=${input}${process.env.RESTAURANT_API}`;
+  const restaurantQuery = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=49.205,-122.911&radius=20000&type=restaurant&keyword=${input}${process.env.RESTAURANT_API}`;
   const productQuery = `https://serpapi.com/search.json?engine=google&q=${encodedInput}&api_key=${process.env.PRODUCT_API}`;
 
   return {
