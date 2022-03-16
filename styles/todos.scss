@@ -10,12 +10,17 @@
   align-items: center;
   justify-content: start;
   padding-bottom: 10px;
+<<<<<<< Updated upstream
   border-radius: 15px 50px 30px ;
   font-family: 'Hubballi', cursive;
 
   h5 {
     border-bottom: dotted 3px #BBB;
   }
+=======
+  border-radius: 15px 50px 30px;
+  font-family: "Hubballi", cursive;
+>>>>>>> Stashed changes
 }
 
 #todo-form {
@@ -30,7 +35,6 @@
     margin-right: 10px;
     text-align: center;
   }
-
 }
 
 article {
@@ -44,20 +48,23 @@ article {
   display: flex;
   flex-direction: column;
 
-div{
+  div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
 
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: left;
-  align-items: center;
-  width: 100%;
+    h4 {
+      padding-left: 10px;
+    }
 
-  h4 {
-    padding-left: 10px;
+    .strike-through {
+      text-decoration: line-through;
+      color: green;
+    }
   }
-
-}
 
   footer {
     margin: -15px;
@@ -65,21 +72,19 @@ div{
     display: flex;
     justify-content: space-between;
 
-
-    btn-hover:hover{
-    color: red;
+    .btn-hover:hover {
+      color: red;
     }
 
     select {
       height: 20px;
       width: 50px;
     }
-    form{
+    form {
       margin: 12px;
       height: 20px;
     }
   }
-
 }
 
 article:hover {
