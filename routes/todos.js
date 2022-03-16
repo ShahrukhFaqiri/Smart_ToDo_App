@@ -11,9 +11,6 @@ const router = express.Router();
 module.exports = (db) => {
   router.get("/display", (req, res) => {
     db.query(`SELECT * FROM todos;`).then((data) => {
-      // data.rows.forEach((row) => {
-      //   console.log(data.rows);
-      // });
       res.send(data.rows);
     });
   });
@@ -24,6 +21,15 @@ module.exports = (db) => {
         res.send('ITEM DELETED');
       });
   });
+
+  router.post('/edit', (req, res) => {
+    console.log(res)
+    console.log(`in the backend here!`)
+    return db.query(`UPDATE todos SET category = $1 WHERE id = $2 RETURNING *;`,[req.body.category,req.body.id])
+    .then((data) => {
+      return res.status(200).json(data.rows[0]);
+    })
+  })
 
   return router;
 

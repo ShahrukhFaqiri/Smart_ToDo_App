@@ -10,9 +10,9 @@ $(() => {
       url: "/searches",
       method: "POST",
       data: serializedData,
-      success: function (res){
-        addTodos([res])
-      }
+      success: function (res) {
+        addTodos([res]);
+      },
     });
   });
 });
@@ -27,20 +27,17 @@ const createTodoElement = (data, id) => {
  ${info}
 <footer>
   <button id="${id}">Delete</button>
-
-  <form action="/">
+  <form>
   <label for="categories">Choose a category:</label>
-  <select name="category" id="category">
+  <select name="category" id="edit-${id}">
+    <option value="Select">Select - </option>
     <option value="Movies">Movies</option>
     <option value="Restaurants">Restaurants</option>
     <option value="Books">Books</option>
     <option value="Products">Products</option>
   </select>
-  <br><br>
-  <input id="edit-${id}type="submit" value="Submit">
 </form>
-
-  </footer>
+</footer>
 </article>
 `;
 
@@ -60,34 +57,52 @@ const loadTodos = function () {
 const addTodos = (todos) => {
   for (let todo of todos) {
     switch (todo.category) {
-      case 'Movies':
-        $('#movies').append(createTodoElement(todo.description, todo.id));
+      case "Movies":
+        $("#movies").append(createTodoElement(todo.description, todo.id));
         break;
-      case 'Books':
-        $('#books').append(createTodoElement(todo.description, todo.id));
+      case "Books":
+        $("#books").append(createTodoElement(todo.description, todo.id));
         break;
-      case 'Products':
-        $('#products').append(createTodoElement(todo.description, todo.id));
+      case "Products":
+        $("#products").append(createTodoElement(todo.description, todo.id));
         break;
-      case 'Restaurants':
-        $('#restaurants').append(createTodoElement(todo.description, todo.id));
+      case "Restaurants":
+        $("#restaurants").append(createTodoElement(todo.description, todo.id));
         break;
-    };
-
+    }
     addEventDelete(todo.id);
-
-  };
+    addEventEdit(todo.id);
+  }
 };
 
 const addEventDelete = (id) => {
-  $('#' + id).click(function () {
+  $("#" + id).click(function () {
     $.ajax({
       url: "/todos/delete",
       method: "POST",
-      data: { 'id': id },
+      data: { id: id },
       success: function () {
-        $('#' + id).parents('.todo-card').empty();
-      }
+        $("#" + id)
+          .parents(".todo-card")
+          .remove();
+      },
+    });
+  });
+};
+
+const addEventEdit = (id) => {
+  $("#edit-" + id).change(function () {
+    let category = $(this).val();
+    $.ajax({
+      url: "todos/edit",
+      method: "POST",
+      data: { id, category },
+      success: function (res) {
+        $("#edit-" + id)
+          .parents(".todo-card")
+          .remove();
+        addTodos([res]);
+      },
     });
   });
 };
