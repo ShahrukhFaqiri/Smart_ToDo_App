@@ -1,12 +1,12 @@
+
 body {
   align-items: center;
-  min-height: 100vh;
 
-/* Created with https://www.css-gradient.com */
-background: #13D3EE;
-background: -webkit-linear-gradient(top left, #13D3EE, #E2FB1C);
-background: -moz-linear-gradient(top left, #13D3EE, #E2FB1C);
-background: linear-gradient(to bottom right, #13D3EE, #E2FB1C);
+  /* Created with https://www.css-gradient.com */
+  background: #13d3ee;
+  background: -webkit-linear-gradient(top left, #13d3ee, #e2fb1c);
+  background: -moz-linear-gradient(top left, #13d3ee, #e2fb1c);
+  background: linear-gradient(to bottom right, #13d3ee, #e2fb1c);
 
   div {
     display: flex;
@@ -38,7 +38,6 @@ background: linear-gradient(to bottom right, #13D3EE, #E2FB1C);
   #login-logout {
     display: inline-flex;
   }
-
 }
 
 .container {
@@ -48,5 +47,5 @@ background: linear-gradient(to bottom right, #13D3EE, #E2FB1C);
 }
 
 #logout {
-  margin-left:10px;
+  margin-left: 10px;
 }
