@@ -106,10 +106,12 @@ module.exports = (db) => {
               category = "Products";
               break;
             default:
-              'Products';
-          }
-        }
-      }
+              break;
+          };
+        } else {
+          category = 'Products';
+        };
+      };
 
       return addIntoDb(req.session.userId, input, category).then((data) => {
         console.log(`ADDED ${JSON.stringify(data.rows)} TO TABLE TODOS}`);

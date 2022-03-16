@@ -34,7 +34,9 @@ article {
   background: #f5fff5;
   border-radius: 15px;
   width: 90%;
-  height: 100px;
+  height: auto;
+  min-height: fit-content;
+  padding-bottom: 12px;
   display: flex;
   flex-direction: column;
 
