@@ -1,14 +1,24 @@
-module.exports ={
+module.exports = {
   movies: [
     'imdb',
     'rottentomatoes',
     'warnerbros',
-    'netflix'
+    'netflix',
+    'disneyplus',
+    'hbomax',
+    'hulu',
+    'primevideo',
+    'crunchyroll',
+    'rogerebert',
+    'tvtropes'
   ],
   books: [
     'goodreads',
     'sparknotes',
-    'indigo'
+    'indigo',
+    'scholastic',
+    'barnesandnoble',
+    'nationalbook'
   ],
   products: [
     'playstation',
@@ -17,7 +27,13 @@ module.exports ={
     'cnet',
     'techradar',
     'tomsguide',
-    'gamesradar'
+    'gamesradar',
+    'wayfair',
+    'ashleyfurniture',
+    'ikea',
+    'target',
+    'overstock',
+    'havertys'
   ],
   restaurants: [
     'yelp',
