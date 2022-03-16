@@ -21,12 +21,12 @@ module.exports = (db) => {
 
       if (parsedResult.length !== 0) {
         for (let i = 0; i < parsedResult.length; i++) {
-          if (input === parsedResult[i].title) {
+          if (cleanString(input) === cleanString(parsedResult[i].title)) {
             weight++;
             break;
-          }
-        }
-      }
+          };
+        };
+      };
       return weight;
     });
 
@@ -37,7 +37,7 @@ module.exports = (db) => {
 
       if (totalItems !== 0) {
         for (let i = 0; i < parsedResult.length; i++) {
-          if (input === parsedResult[i].volumeInfo.title) {
+          if (cleanString(input) === cleanString(parsedResult[i].volumeInfo.title)) {
             weight++;
             break;
           }
