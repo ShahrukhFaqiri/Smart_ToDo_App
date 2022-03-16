@@ -12,6 +12,7 @@ $(() => {
       data: serializedData,
       success: function (res) {
         addTodos([res]);
+        $('#submit-box').val("").focus();
       },
     });
   });
@@ -22,8 +23,8 @@ const createTodoElement = (data, id) => {
   let $taskCard = `
 <article class="todo-card pulse">
 <div>
-  <input type="checkbox">
-  <h4>${info}</h6>
+  <input type="checkbox" id="checkbox-${id}">
+  <h4>${info}</h4>
 </div>
 <footer>
 <button class="button btn" title="Delete ToDo" id="${id}"><i class="fa fa-trash btn-hover"></i></button>
@@ -71,6 +72,7 @@ const addTodos = (todos) => {
     }
     addEventDelete(todo.id);
     addEventEdit(todo.id);
+    checkDone(todo.id);
   }
 };
 
@@ -103,5 +105,15 @@ const addEventEdit = (id) => {
         addTodos([res]);
       },
     });
+  });
+};
+
+const checkDone = (id) => {
+  $("#checkbox-" + id).change(function () {
+    if ($("h4").hasClass("strike-through")) {
+      $("h4").removeClass("strike-through");
+    } else {
+      $("h4").addClass("strike-through");
+    }
   });
 };
