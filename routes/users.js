@@ -38,8 +38,12 @@ module.exports = (db) => {
   router.post('/edit', (req, res) => {
     db.query(`UPDATE users SET name = $1 WHERE id = $2 RETURNING *;`, [req.body.submit, req.session.userId])
       .then((data) => {
+        if (data.rows.length !== 0) {
+          res.status(401).send(`Username is taken boss!`);
+          return false;
+        };
         req.session.username = data.rows[0].name;
-        res.redirect('edit');
+        res.redirect('/');
       });
   });
 
@@ -51,7 +55,7 @@ module.exports = (db) => {
         if (data.rows.length !== 0) {
           res.status(401).send(`Username is taken boss!`);
           return false;
-        }
+        };
         return true;
       })
       .then(ifNewUser => {
