@@ -106,7 +106,7 @@ module.exports = (db) => {
               category = "Products";
               break;
             default:
-              null;
+              'Products';
           }
         }
       }
