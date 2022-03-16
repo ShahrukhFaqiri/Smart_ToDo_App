@@ -23,14 +23,13 @@ const createTodoElement = (data, id) => {
 <article class="todo-card">
 <div>
   <input type="checkbox">
+  <h4>${info}</h6>
 </div>
- ${info}
 <footer>
   <button id="${id}">Delete</button>
   <form>
-  <label for="categories">Choose a category:</label>
   <select name="category" id="edit-${id}">
-    <option value="Select">Select - </option>
+    <option value="Select">Edit -</option>
     <option value="Movies">Movies</option>
     <option value="Restaurants">Restaurants</option>
     <option value="Books">Books</option>
