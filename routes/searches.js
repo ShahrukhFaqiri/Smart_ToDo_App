@@ -49,11 +49,11 @@ module.exports = (db) => {
     const restaurants = request(queries.restaurant).then((result) => {
       const parsedResult = JSON.parse(result).results;
       let weight = 0;
-
       if (parsedResult.length !== 0) {
         for (let i = 0; i < parsedResult.length; i++) {
-          if (cleanString(input) === cleanString(parsedResult[i].name)) {
+          if (cleanString(parsedResult[i].name).includes(cleanString(input))) {
             weight++;
+            console.log(parsedResult[i].name);
           };
         };
       };
@@ -153,7 +153,7 @@ const initializeQueries = (input) => {
   const encodedInput = encodeURIComponent(input);
   const movieQuery = process.env.MOVIE_API + `${encodedInput}`;
   const bookQuery = process.env.BOOK_API + `${encodedInput}%22&langRestrict=en`;
-  const restaurantQuery = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=49.205,-122.911&radius=20000&type=restaurant&keyword=${input}${process.env.RESTAURANT_API}`;
+  const restaurantQuery = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=49.3,-123.1&radius=100000&type=restaurant&keyword=${input}${process.env.RESTAURANT_API}`;
   const productQuery = `https://serpapi.com/search.json?engine=google&q=${encodedInput}&api_key=${process.env.PRODUCT_API}`;
 
   return {
