@@ -6,5 +6,6 @@ CREATE TABLE todos (
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   description TEXT NOT NULL,
   category VARCHAR(255) DEFAULT 'Products',
-  timestamp TIMESTAMP DEFAULT NOW()
+  timestamp TIMESTAMP DEFAULT NOW(),
+  complete BOOLEAN DEFAULT FALSE
 );

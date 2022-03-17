@@ -86,12 +86,11 @@ module.exports = (db) => {
       const scores = [movieScore, bookScore, restaurantScore, productScore];
       console.log(`Scores, Movies ${scores[0]}, Books ${scores[1]}, Restaurants ${scores[2]}, Products ${scores[3]}`);
 
+      console.log(`this is a score:`, scores);
       for (let i = 0; i < scores.length; i++) {
         let biggestScore = 0;
-
         if (scores[i] > biggestScore) {
           biggestScore = scores[i];
-
           switch (i) {
             case 0:
               category = "Movies";
@@ -105,12 +104,11 @@ module.exports = (db) => {
             case 3:
               category = "Products";
               break;
-            default:
-              break;
           };
+          break;
         } else {
-          category = 'Products';
-        };
+          category = "Products";
+        }
       };
 
       return addIntoDb(req.session.userId, input, category).then((data) => {
