@@ -25,7 +25,7 @@ The following steps are only for _one_ of the group members to perform.
   - Check the db folder to see what gets created and seeded in the SDB
 7. Run the server: `npm run local`
   - Note: nodemon is used, so you should not have to restart your server
-8. Visit `http://localhost:8080/`
+8. Visit `http://localhost:3000/`
 
 ## Warnings & Tips
 
