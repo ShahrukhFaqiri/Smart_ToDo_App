@@ -12,21 +12,13 @@ $(() => {
       data: serializedData,
       success: function (res) {
         addTodos([res]);
-        $('#submit-box').val("").focus();
+        $("#submit-box").val("").focus();
       },
     });
   });
 });
 
-const createTodoElement = (description, id, complete) => {
-
-  let addClass = '';
-  if (complete) {
-    addClass = 'strike-through';
-  } else {
-    addClass = '';
-  };
-
+const createTodoElement = (description, id) => {
   let $taskCard = `
 <article class="todo-card pulse">
 <div>
@@ -56,7 +48,7 @@ const loadTodos = function () {
     url: "/todos/display",
     method: "GET",
     success: function (res) {
-      console.log('response', res)
+      console.log("response", res);
       addTodos(res);
     },
   });
@@ -66,28 +58,37 @@ const addTodos = (todos) => {
   for (let todo of todos) {
     switch (todo.category) {
       case "Movies":
-        $("#movies").append(createTodoElement(todo.description, todo.id, todo.complete));
+        $("#movies").append(createTodoElement(todo.description, todo.id));
         break;
       case "Books":
-        $("#books").append(createTodoElement(todo.description, todo.id, todo.complete));
+        $("#books").append(
+          createTodoElement(todo.description, todo.id, todo.complete)
+        );
         break;
       case "Products":
-        $("#products").append(createTodoElement(todo.description, todo.id, todo.complete));
+        $("#products").append(
+          createTodoElement(todo.description, todo.id, todo.complete)
+        );
         break;
       case "Restaurants":
-        $("#restaurants").append(createTodoElement(todo.description, todo.id, todo.complete));
+        $("#restaurants").append(
+          createTodoElement(todo.description, todo.id, todo.complete)
+        );
         break;
     }
     addEventDelete(todo.id);
     addEventEdit(todo.id);
-    // checkDone(todo);
+    checkDone(todo);
 
-    // if (todo.complete) {
-    //   $("#checkbox-" + todo.id).siblings('h4').addClass('strike-through');
-    // } else {
-    //   $("#checkbox-" + todo.id).siblings('h4').removeClass("strike-through");
-    // };
-
+    if (todo.complete) {
+      $("#checkbox-" + todo.id)
+        .siblings("h4")
+        .addClass("strike-through");
+    } else {
+      $("#checkbox-" + todo.id)
+        .siblings("h4")
+        .removeClass("strike-through");
+    }
   }
 };
 
@@ -124,23 +125,24 @@ const addEventEdit = (id) => {
 };
 
 const checkDone = (todo) => {
+  const id = todo.id;
+  const complete = !todo.complete;
+  console.log(complete);
+  $("#checkbox-" + id).change(function () {
+    console.log("hey!");
+    $.ajax({
+      url: "/todos/check",
+      method: "POST",
+      data: { id, complete },
+      success: function (res) {},
+    });
 
-  const id = todo.id
-  const complete = todo.complete;
-  console.log('complete', complete);
+    let $cardText = $("#checkbox-" + id).siblings("h4");
 
-//   $("#checkbox-" + id).change(function () {
-
-//     $.ajax({
-//       url: '/todos/check',
-//       method: 'POST',
-//       data: { id, complete },
-//       success: function (res) {
-//         console.log(res);
-//       }
-//     });
-
-//   });
-
-
+    if ($cardText.hasClass("strike-through")) {
+      $cardText.removeClass("strike-through");
+    } else {
+      $cardText.addClass("strike-through");
+    }
+  });
 };

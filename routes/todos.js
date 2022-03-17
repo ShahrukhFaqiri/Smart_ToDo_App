@@ -11,7 +11,7 @@ const router = express.Router();
 module.exports = (db) => {
   router.get("/display", (req, res) => {
     if (req.session.username) {
-      db.query(`SELECT * FROM todos WHERE user_id = $1;`, [
+      db.query(`SELECT * FROM todos WHERE user_id = $1 ORDER BY timestamp ASC;`, [
         req.session.userId,
       ]).then((data) => {
         res.send(data.rows);
@@ -38,14 +38,17 @@ module.exports = (db) => {
   });
 
   router.post('/check', (req, res) => {
-
+    console.log(`IN the back we are`, req.body.complete);
     return db
-      .query('UPDATE todos SET complete = $1 WHERE id = $2 RETURNING *;', [req.body.complete, req.body.id])
-      .then((data) => {
-        // console.log(data.rows[0]);
-        return res.status(200).send(data.rows[0]);
-      });
-
+    .query('SELECT complete FROM todos WHERE id = $1;', [req.body.id])
+    .then((data) => {
+      console.log('data val', data.rows[0].complete);
+      return db
+        .query('UPDATE todos SET complete = $1 WHERE id = $2 RETURNING *;', [!data.rows[0].complete, req.body.id])
+        .then((data) => {
+          return res.status(200).send(data.rows[0]);
+        });
+    });
   });
 
   return router;
