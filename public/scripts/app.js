@@ -20,12 +20,12 @@ $(() => {
 
 const createTodoElement = (description, id, complete) => {
 
-  // let addClass = '';
-  // if (complete) {
-  //   addClass = 'strike-through';
-  // } else {
-  //   addClass = '';
-  // };
+  let addClass = '';
+  if (complete) {
+    addClass = 'strike-through';
+  } else {
+    addClass = '';
+  };
 
   let $taskCard = `
 <article class="todo-card pulse">
@@ -80,13 +80,13 @@ const addTodos = (todos) => {
     }
     addEventDelete(todo.id);
     addEventEdit(todo.id);
-    checkDone(todo);
+    // checkDone(todo);
 
-    if (todo.complete) {
-      $("#checkbox-" + todo.id).siblings('h4').addClass('strike-through');
-    } else {
-      $("#checkbox-" + todo.id).siblings('h4').removeClass("strike-through");
-    };
+    // if (todo.complete) {
+    //   $("#checkbox-" + todo.id).siblings('h4').addClass('strike-through');
+    // } else {
+    //   $("#checkbox-" + todo.id).siblings('h4').removeClass("strike-through");
+    // };
 
   }
 };
@@ -129,18 +129,18 @@ const checkDone = (todo) => {
   const complete = todo.complete;
   console.log('complete', complete);
 
-  $("#checkbox-" + id).change(function () {
+//   $("#checkbox-" + id).change(function () {
 
-    $.ajax({
-      url: '/todos/check',
-      method: 'POST',
-      data: { id, complete },
-      success: function (res) {
-        console.log(res);
-      }
-    });
+//     $.ajax({
+//       url: '/todos/check',
+//       method: 'POST',
+//       data: { id, complete },
+//       success: function (res) {
+//         console.log(res);
+//       }
+//     });
 
-  });
+//   });
 
 
 };

@@ -40,7 +40,7 @@ module.exports = (db) => {
   router.post('/check', (req, res) => {
 
     return db
-      .query('UPDATE todos SET complete = $1 WHERE id = $2 RETURNING *;', [!req.body.complete, req.body.id])
+      .query('UPDATE todos SET complete = $1 WHERE id = $2 RETURNING *;', [req.body.complete, req.body.id])
       .then((data) => {
         // console.log(data.rows[0]);
         return res.status(200).send(data.rows[0]);
