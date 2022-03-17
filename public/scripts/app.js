@@ -18,15 +18,16 @@ $(() => {
   });
 });
 
-const createTodoElement = (description, id) => {
+const createTodoElement = (description, id, time) => {
   let $taskCard = `
 <article class="todo-card pulse">
 <div>
   <input type="checkbox" id="checkbox-${id}">
-  <h4>${description}</h4>
+  <h4>${safeText(description)}</h4>
 </div>
 <footer>
 <button class="button btn" title="Delete ToDo" id="${id}"><i class="fa fa-trash btn-hover"></i></button>
+<h6>${timeago.format(time)}</h6>
   <form>
   <select title="Edit ToDo" class="btn btn-secondary btn-sm" data-toggle="dropdown" name="category" id="edit-${id}">
     <option value="Select">-</option>
@@ -41,6 +42,12 @@ const createTodoElement = (description, id) => {
 `;
 
   return $taskCard;
+};
+
+const safeText = function (string) {
+  let div = document.createElement('div');
+  div.appendChild(document.createTextNode(string));
+  return div.innerHTML;
 };
 
 const loadTodos = function () {
@@ -58,21 +65,21 @@ const addTodos = (todos) => {
   for (let todo of todos) {
     switch (todo.category) {
       case "Movies":
-        $("#movies").append(createTodoElement(todo.description, todo.id));
+        $("#movies").append(createTodoElement(todo.description, todo.id, todo.timestamp));
         break;
       case "Books":
         $("#books").append(
-          createTodoElement(todo.description, todo.id, todo.complete)
+          createTodoElement(todo.description, todo.id, todo.timestamp)
         );
         break;
       case "Products":
         $("#products").append(
-          createTodoElement(todo.description, todo.id, todo.complete)
+          createTodoElement(todo.description, todo.id, todo.timestamp)
         );
         break;
       case "Restaurants":
         $("#restaurants").append(
-          createTodoElement(todo.description, todo.id, todo.complete)
+          createTodoElement(todo.description, todo.id, todo.timestamp)
         );
         break;
     }
