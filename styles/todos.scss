@@ -33,8 +33,11 @@
 }
 
 article {
+
+  //f5fff5
   margin-top: 15px;
-  background: #f5fff5;
+  background: rgb(255,255,255);
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(215,228,82,0.9192051820728291) 37%, rgba(60,230,94,0.3477766106442577) 100%);
   border-radius: 15px;
   width: 90%;
   height: auto;

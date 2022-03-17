@@ -63,6 +63,7 @@ module.exports = (db) => {
     const googleSearch = request(queries.product).then((result) => {
       const parsedResult = JSON.parse(result).organic_results;
       const searchDomains = [];
+      console.log(parsedResult);
 
       for (let i = 0; i < parsedResult.length; i++) {
         const domain = parsedResult[i].link.replace(/.+\/\/|www.|\..+/g, "");
@@ -75,7 +76,6 @@ module.exports = (db) => {
     Promise.all([movies, books, restaurants, googleSearch]).then((result) => {
       const searchResults = result[3];
       const searchHits = catagorizeSearchResults(searchResults);
-      console.log('Web Search Hits', searchHits);
 
       const movieScore = result[0] + searchHits.movies;
       const bookScore = result[1] + searchHits.books;
