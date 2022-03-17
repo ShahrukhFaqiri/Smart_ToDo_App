@@ -81,14 +81,14 @@ module.exports = (db) => {
       const bookScore = result[1] + searchHits.books;
       const restaurantScore = result[2] + searchHits.restaurants;
       const productScore = searchHits.products;
-      let category = "";
+      let category = "Products";
 
       const scores = [movieScore, bookScore, restaurantScore, productScore];
       console.log(`Scores, Movies ${scores[0]}, Books ${scores[1]}, Restaurants ${scores[2]}, Products ${scores[3]}`);
 
-      console.log(`this is a score:`, scores);
+      let biggestScore = 0;
+
       for (let i = 0; i < scores.length; i++) {
-        let biggestScore = 0;
         if (scores[i] > biggestScore) {
           biggestScore = scores[i];
           switch (i) {
@@ -105,9 +105,6 @@ module.exports = (db) => {
               category = "Products";
               break;
           };
-          break;
-        } else {
-          category = "Products";
         }
       };
 
@@ -170,6 +167,7 @@ const initializeQueries = (input) => {
 const cleanString = function (string) {
   return string
     .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+    .replace(/'/g, "")
     .replace(/\s+/g, " ")
     .toLowerCase();
 };

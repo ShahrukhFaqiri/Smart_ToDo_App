@@ -66,6 +66,7 @@ article {
     padding: 0 15px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     .btn-hover:hover {
       color: red;
@@ -78,6 +79,7 @@ article {
     form {
       margin: 12px;
       height: 20px;
+      display: flex;
     }
   }
 }
