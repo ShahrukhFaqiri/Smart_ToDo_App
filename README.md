@@ -1,8 +1,8 @@
-Smart Todo Project
+## Smart Todo Project
 Contributors:
-[Connor Mullin] (https://github.com/CJM1994)
-[Sha Faqiri] (https://github.com/ShahrukhFaqiri)
-[Manuel Zuniga] (https://github.com/Nachosonfriday)
+[Connor Mullin](https://github.com/CJM1994),
+[Sha Faqiri](https://github.com/ShahrukhFaqiri),
+[Manuel Zuniga](https://github.com/Nachosonfriday).
 
 =========
 
@@ -10,7 +10,6 @@ Smart Todo is an API-based single-page todo app. It was used to practice our HTM
 
 It uses 4 different API's to search and categorize user inputs into preset categories on the page. The user is able to login or register, edit their name, and move items between categories. It stores the user's entries in to a database that can be retrieved afterwards. 
 
-=========
 
 ## Getting Started
 
@@ -27,7 +26,6 @@ It uses 4 different API's to search and categorize user inputs into preset categ
   - Note: nodemon is used, so you should not have to restart your server
 8. Visit `http://localhost:3000/`
 
-=========
 
 ## Dependencies
 
@@ -38,3 +36,10 @@ It uses 4 different API's to search and categorize user inputs into preset categ
 - pg
 - request
 - request-promise-native
+
+## Finished Product
+
+!["Adding and checking off items"](https://github.com/ShahrukhFaqiri/Smart_ToDo_App/blob/master/docs/adding%E2%81%84checking.gif)
+!["Drop down image"](https://github.com/ShahrukhFaqiri/Smart_ToDo_App/blob/master/docs/dropdown.png)
+!["Login and logout"](https://github.com/ShahrukhFaqiri/Smart_ToDo_App/blob/master/docs/login%E2%81%84logout.gif)
+
