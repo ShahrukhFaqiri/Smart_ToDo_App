@@ -8,8 +8,7 @@ Contributors:
 
 Smart Todo is an API-based single-page todo app. It was used to practice our HTML, CSS, JS, jQuery and AJAX front-end skills, and our NodeJS, SQL, and Express back-end skills.
 
-It uses 4 different API's to search and categorize user inputs into preset categories on the page. The user is able to login or register, edit their name, and move items between categories. It stores the user's entries in to a database that can be retrieved afterwards. 
-
+It uses 4 different API's to search and categorize user inputs into preset categories on the page. The user is able to login or register, edit their name, and move items between categories. It stores the user's entries in to a database that can be retrieved afterwards.
 
 ## Getting Started
 
@@ -26,9 +25,10 @@ It uses 4 different API's to search and categorize user inputs into preset categ
   - Note: nodemon is used, so you should not have to restart your server
 8. Visit `http://localhost:3000/`
 
-
 ## Dependencies
 
+- node
+- jquery
 - body-parser 
 - cookie-session
 - ejs
@@ -43,3 +43,9 @@ It uses 4 different API's to search and categorize user inputs into preset categ
 !["Drop down image"](https://github.com/ShahrukhFaqiri/Smart_ToDo_App/blob/master/docs/dropdown.png)
 !["Login and logout"](https://github.com/ShahrukhFaqiri/Smart_ToDo_App/blob/master/docs/login%E2%81%84logout.gif)
 
+=======
+1. [Create](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) a new repository using this repository as a template.
+2. Clone your repository onto your local device.
+3. Install dependencies using the `npm install` command.
+3. Start the web server using the `npm run local` command. The app will be served at <http://localhost:3000/>.
+4. Go to <http://localhost:3000/> in your browser.
